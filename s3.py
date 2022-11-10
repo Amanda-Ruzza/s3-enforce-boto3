@@ -15,8 +15,7 @@ def DeleteBucket(name):
     s3_client = boto3.client('s3')
     s3_client.delete_bucket(Bucket=name)
     return True
-
-# This is the 'enforcing encryption' function
+    
 # This is the 'enforcing encryption' function
 def EnforceS3Encryption(name):
     s3 = boto3.resource('s3')
