@@ -3,8 +3,12 @@ import boto3
 # This reusable function creates an S3 bucket
 def CreateBucket(name):
     s3_client = boto3.client('s3')
-    s3_client.create_bucket(Bucket=name)
-    return True
+    try:
+        s3_client.create_bucket(Bucket=name)
+        return True
+    except s3_client.exceptions.BucketAlreadyExists:
+        print(f"The bucket name {name} is taken, please choose a different name")
+        return False
 
 # This reusable function deletes an S3 bucket
 def DeleteBucket(name):
@@ -12,6 +16,7 @@ def DeleteBucket(name):
     s3_client.delete_bucket(Bucket=name)
     return True
 
+# This is the 'enforcing encryption' function
 # This is the 'enforcing encryption' function
 def EnforceS3Encryption(name):
     s3 = boto3.resource('s3')
